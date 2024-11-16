@@ -1,0 +1,23 @@
+.modal-content {
+    padding: 20px;
+  }
+  .modal-header, .modal-footer {
+    border: none;
+  }
+  .sidebar {
+    /* background-color: #f8f9fa; */
+    background: url(images/reactstudy.jpg);
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    height: 300px;
+  }
+  .faq-section ul {
+    list-style-type: none;
+  }
+  .faq-section li {
+    margin-bottom: 10px;
+  }
+  .moreContent {
+    display: none;
+}
