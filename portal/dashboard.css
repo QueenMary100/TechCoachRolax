@@ -1,5 +1,10 @@
+.gradient-bg {
+    background: linear-gradient(120deg, #1a202c 0%, #2d3748 100%);
+    color: whitesmoke;
+}
 .modal-content {
     padding: 20px;
+    color: black;
   }
   .modal-header, .modal-footer {
     border: none;
@@ -11,6 +16,7 @@
     border-radius: 5px;
     width: 400px;
     height: 300px;
+    margin-top: 10px;
   }
   .faq-section ul {
     list-style-type: none;
@@ -21,3 +27,23 @@
   .moreContent {
     display: none;
 }
+footer h5 {
+    font-weight: bold;
+  }
+
+  footer p, footer a {
+    font-size: 14px;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  footer .bi {
+    font-size: 20px;
+    transition: color 0.3s ease;
+  }
+
+  footer .bi:hover {
+    color: #007bff;
+  }
