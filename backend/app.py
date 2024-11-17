@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, make_response, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import declarative_base
 from dotenv import load_dotenv
@@ -27,15 +27,74 @@ from model import User, Course, QA
 
 @app.route("/")
 def main():
-    return "<h1>Project working fine</h1>"
+    return "success hit"
 
 # defining routes
 
 # post question
+@app.route('/query', methods=['POST'])
+def query():
+    username = request.json.get('username')
+    course = request.json.get('course')
+    question = request.json.get('question')
+
+    course_obj = db.session.execute(db.select(Course).filter_by(course_name=course)).scalar()
+    print("Course", course_obj)
+    course_id = course_obj.id
+
+    user_query = QA(question=question, course_id=course_id)
+    try:
+        db.session.add(user_query)
+        db.session.commit()
+        return make_response(jsonify({
+            "message": "question sent successfully"
+        }),201)
+    except Exception as e:
+        return make_response(jsonify({
+            "message": f"{str(e)}"
+        }), 400)
 
 # get question
 
+@app.route('/query')
+def get_queries():
+    questions = db.session.execute(db.select(QA)).scalars()
+
+    query_list = []
+    
+    for query in questions:
+        print(query)
+        query_list.append({
+            'question': query.question
+        })
+    return make_response(jsonify({
+        "questions": query_list
+    }), 200)
+
 # track progress
+@app.route("/progress")
+def set_progress():
+    pass
+
+
+@app.route("/answer", methods=['POST'])
+def answer():
+    username = request.json.get('username')
+    question_id = request.json.get('question_id')
+    answer = request.json.get('answer')
+    
+    question = db.session.execute(db.select(QA).filter_by(id=question_id)).scalar()
+
+    try:
+        question.answer = answer
+        db.session.commit()
+        return make_response(jsonify({
+            "message": "answer submitted successfully"
+        }), 200)
+    except Exception as e:
+        return make_response(jsonify({
+            "message": f"{str(e)}"
+        }), 400)
 
 
 

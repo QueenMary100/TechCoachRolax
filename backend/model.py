@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 class User(db.Model):
     __tablename__ = 'tbl_user'
     
-    id =  Column(Integer, primary_key=True, nullable=False)
+    id =  Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     username = Column(String(30), nullable=False)
     email = Column(String(50), nullable=False)
     password = Column(String(30))
@@ -14,7 +14,7 @@ class User(db.Model):
 class Course(db.Model):
     __tablename__ = 'tbl_course'
 
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     course_name = Column(String(50))
     progress = Column(String(50))
     user_id = Column(Integer, ForeignKey('tbl_user.id'))
@@ -22,7 +22,8 @@ class Course(db.Model):
 class QA(db.Model):
     __tablename__ = 'tbl_qa'
 
-    id =   Column(Integer, primary_key=True, nullable=False)
+    id =   Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     question = Column(String(255), nullable=False)
     answer = Column(TEXT, nullable=True)
+    answered_by = Column(Integer, ForeignKey('tbl_user.id'))
     course_id = Column(Integer, ForeignKey('tbl_course.id'))
